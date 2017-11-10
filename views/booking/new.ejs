@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="/js/booking/new.js"></script>
+</head>
+<body>
+<input id="eventName" type="text" placeholder="Event navn"><br>
+<input id="eventDate" type="date">
+<p>Kontaktperson</p>
+<input id="contactName" type="text" placeholder="Navn">
+<input id="contactMail" type="text" placeholder="E-post">
+<p>Event detaljer</p>
+<select id="eventType">
+    <option value="vanlig">Ordinær åpning</option>
+    <option value="utleie">Utleie</option>
+    <option value="konsert">Konsert</option>
+</select><br>
+<input id="eventClosed" type="checkbox"> Lukket arrangement<br>
+<input id="eventAmtGuests" type="number" placeholder="Antall gjester"><br>
+<textarea id="eventDesc"></textarea>
+<button id="save">Lagre</button>
+</body>
+</html>
