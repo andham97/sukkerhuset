@@ -18,6 +18,7 @@ var mongoOpt = {
 
 mongoose.connect(mongoURI, mongoOpt);
 dbCon = mongoose.connection;
+ObjectId = mongoose.Types.ObjectId;
 dbCon.on('error', console.error.bind(console, 'Connection error: '));
 dbCon.on('open', function(){
     var express = require('express');
