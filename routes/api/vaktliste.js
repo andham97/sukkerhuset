@@ -2,10 +2,10 @@ var router = require('express').Router();
 var Semester = require('../../internal/models/Semester');
 var escape = require('html-escape');
 
-router.get('/', function(req, res){
+router.post('/', function(req, res){
     var s = {
-        start: new Date("2017-08-01"),
-        end: new Date("2017-11-30"),
+        start: new Date(req.body.start) || new Date("2017-08-01"),
+        end: new Date(req.body.end) || new Date("2017-11-30"),
         days: []
     };
     var lim = (s.end.getTime() - s.start.getTime())/(1000*60*60*24) + 1;
@@ -21,8 +21,7 @@ router.get('/', function(req, res){
     });
 });
 
-router.post('/', function(req, res){
-    console.log(req.body);
+router.put('/', function(req, res){
     var type = req.body.type;
     var pos = req.body.pos;
     var val = escape(req.body.value);
@@ -70,7 +69,7 @@ router.post('/', function(req, res){
     qry[s] = val;
     Semester.update({_id: semester}, {$set: qry}, function(err){
         if(err)
-            res.status(500).send(err);
+            res.status(500).send(JSON.stringify(err));
         else
             res.status(200).send();
     });
@@ -80,18 +79,25 @@ function Day(date){
     this.date = date;
     this.arrangement = "";
     this.comment = "";
+    this.kontakt = {
+        navn: "",
+        email: ""
+    };
+    this.kontrakt = "";
+    this.faktura = "";
+    this.antallGjester = "";
     this.vakt = [
         {
             va: "",
             komite: ["", "", "", ""],
-            start: "14:00",
-            end: "18:00"
+            start: [4, 5].includes(date.getDay()) ? "14:00" : "",
+            end: [4, 5].includes(date.getDay()) ? "18:00" : ""
         },
         {
             va: "",
             komite: ["", "", "", ""],
-            start: "18:00",
-            end: "01:00"
+            start: [4, 5, 6].includes(date.getDay()) ? "18:00" : "",
+            end: [5, 6].includes(date.getDay()) ? "01:00" : (date.getDay() === 4 ? "00:00" : "")
         }
     ];
 }
